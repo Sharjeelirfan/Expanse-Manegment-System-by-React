@@ -9,7 +9,7 @@ function App() {
   let [editAmount, setEditAmount] = useState(null)
 
 
-  let handleAmount = (event) =>{
+  let addAmountOnKeyDown = (event) =>{
     if(event.key === "Enter") addText()
   }
 
@@ -78,7 +78,7 @@ function App() {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             type="number"
-            onKeyDown={handleAmount}
+            onKeyDown={addAmountOnKeyDown}
             id="amountInput"
           />
           <select
@@ -90,7 +90,7 @@ function App() {
             <option value="expence">Expence</option>
           </select>{" "}
           <button onClick={addText}>
-            {editAmount === null ? "Add" : "Edit"}
+            {editAmount === null ? "Add" : "Update"}
           </button>
         </div>
 
