@@ -8,7 +8,13 @@ function App() {
   let [type, setType] = useState("income");
   let [editAmount, setEditAmount] = useState(null)
 
-  let handleAmount = () => {
+
+  let handleAmount = (event) =>{
+    if(event.key === "Enter") addText()
+  }
+
+  let addText = () => {
+
     if(editAmount !== null){
       let copyTran = [...tarnsaction];
       copyTran[editAmount] = {amount , type }
@@ -22,7 +28,7 @@ function App() {
         alert("Please Enter Amount!");
       }
     }
-    setAmount('')
+  setAmount("");
   };
 
   let totalIncome = tarnsaction.reduce((acc, curr) => {
@@ -72,6 +78,7 @@ function App() {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             type="number"
+            onKeyDown={handleAmount}
             id="amountInput"
           />
           <select
@@ -82,37 +89,40 @@ function App() {
             <option value="income">Income</option>
             <option value="expence">Expence</option>
           </select>{" "}
-          <button onClick={handleAmount}>{editAmount === null ? "Add" : "Edit"}</button>
+          <button onClick={addText}>
+            {editAmount === null ? "Add" : "Edit"}
+          </button>
         </div>
 
         <div id="tableDiv">
           <table id="table" style={{ border: "3px solid black" }}>
             <thead>
-            <tr>
-              <th>S.No</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>Delete</th>
-              <th>Edit</th>
-            </tr>
+              <tr>
+                <th>S.No</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Delete</th>
+                <th>Edit</th>
+              </tr>
             </thead>
             <tbody>
-
-            {tarnsaction.map((data, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{data.amount}</td>
-                  <td>{data.type}</td>{" "}
-                  <td>
-                    <button onClick={() => deleteAmount(index)}>Delete</button>
-                  </td>
-                  <td>
-                    <button onClick={() => edit(index)}>Edit</button>
-                  </td>
-                </tr>
-              );
-            })}
+              {tarnsaction.map((data, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{data.amount}</td>
+                    <td>{data.type}</td>{" "}
+                    <td>
+                      <button onClick={() => deleteAmount(index)}>
+                        Delete
+                      </button>
+                    </td>
+                    <td>
+                      <button onClick={() => edit(index)}>Edit</button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
