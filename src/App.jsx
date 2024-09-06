@@ -3,10 +3,11 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  let [amount, setAmount] = useState(0);
+  let [amount, setAmount] = useState();
   let [tarnsaction, setTarnsaction] = useState([]);
   let [type, setType] = useState("income");
   let [editAmount, setEditAmount] = useState(null)
+  let [purpose , setPurpose] = useState([])
 
 
   let addAmountOnKeyDown = (event) =>{
@@ -17,19 +18,21 @@ function App() {
 
     if(editAmount !== null){
       let copyTran = [...tarnsaction];
-      copyTran[editAmount] = {amount , type }
+      copyTran[editAmount] = {amount , type ,purpose }
       setTarnsaction(copyTran)
         setEditAmount(null)
     }else{
 
       if (amount && type) {
-        setTarnsaction([...tarnsaction, { amount, type }]);
+        setTarnsaction([...tarnsaction, { amount, type , purpose }]);
       } else {
         alert("Please Enter Amount!");
       }
     }
   setAmount("");
+  setPurpose('')
   };
+
 
   let totalIncome = tarnsaction.reduce((acc, curr) => {
     return curr.type == "income" ? acc + Number(curr.amount) : acc;
@@ -50,6 +53,7 @@ function App() {
   let edit = (index) => {
     setAmount(tarnsaction[index].amount)
     setType(tarnsaction[index].type)
+    setPurpose(tarnsaction[index].purpose)
     setEditAmount(index)
     }
   
@@ -76,10 +80,19 @@ function App() {
         <div>
           <input
             value={amount}
+            placeholder="Amount"
             onChange={(e) => setAmount(e.target.value)}
             type="number"
             onKeyDown={addAmountOnKeyDown}
             id="amountInput"
+          />
+          <input
+            placeholder="Purpose"
+            onKeyDown={addAmountOnKeyDown}
+            value={purpose}
+            onChange={(e) => setPurpose(e.target.value)}
+            id="purposeInput"
+            type="text"
           />
           <select
             value={type}
@@ -101,6 +114,7 @@ function App() {
                 <th>S.No</th>
                 <th>Amount</th>
                 <th>Type</th>
+                <th>Purpose</th>
                 <th>Delete</th>
                 <th>Edit</th>
               </tr>
@@ -111,7 +125,7 @@ function App() {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{data.amount}</td>
-                    <td>{data.type}</td>{" "}
+                    <td>{data.type}</td> <td>{data.purpose}</td>{" "}
                     <td>
                       <button onClick={() => deleteAmount(index)}>
                         Delete

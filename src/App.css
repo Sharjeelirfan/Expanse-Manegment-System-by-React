@@ -13,7 +13,19 @@
   width: 300px;
   height: 30px;
   font-size: 20px;
-  /* margin-top: 5px; */
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+#purposeInput{
+  border-radius: 5px;
+  height: 30px;
+  padding: 5px;
+  font-size: 20px;
+  width: 300px;
+  margin-left: 10px;
+  border: none;
+
 }
 #select{
   width: 100px;
